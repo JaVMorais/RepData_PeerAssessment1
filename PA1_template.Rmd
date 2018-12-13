@@ -155,7 +155,7 @@ custom_timeseries <- function(df){
     theme_bw(base_size = 11) +
     theme(
         strip.background = element_blank()
-    )
+    ) %>% return
 }
 
 custom_timeseries(activity_mean)
@@ -336,7 +336,7 @@ activity_mean2
 Using the _custom\_timeseries()_ function defined previously and adding a _facet\_grid()_ that runs over the values of the factor 'date', we can then easily plot the time series of the average number of steps per interval over the weekend and during the weekdays:
 
 ```{r}
-custom_timeseries(activity_mean2) + facet_grid(date~.)
+custom_timeseries(activity_mean2) %>% + facet_grid(activity_mean2$date~.)
 ```
 
 From the plots above, it is possible to see that, on average, the subject of the experiment started his/hers activity later in the day during the weekends--for weekdays the step number has a sharp increase around 6:00 and another sharp increase around the peak around 8:00 while for weekends the step number increases gradualy from 6:00 until a peak around 9:00-- and remained active until later in the day--on weekdays the average number of steps per interval goes below 50 around 19:00 while on weekends it remains above 50 until aroun 21:00. In addition, there seems to be a higher number of steps between 12:00 and 18:00 on weekends when compared with weekdays.

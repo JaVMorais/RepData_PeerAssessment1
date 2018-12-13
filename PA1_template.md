@@ -80,13 +80,13 @@ summary(activity_data)
 ```
 
 ```
-##      steps               date               interval      
-##  Min.   :  0.0000   Min.   :2012-10-01   Min.   :   0.00  
-##  1st Qu.:  0.0000   1st Qu.:2012-10-16   1st Qu.: 588.75  
-##  Median :  0.0000   Median :2012-10-31   Median :1177.50  
-##  Mean   : 37.3826   Mean   :2012-10-31   Mean   :1177.50  
-##  3rd Qu.: 12.0000   3rd Qu.:2012-11-15   3rd Qu.:1766.25  
-##  Max.   :806.0000   Max.   :2012-11-30   Max.   :2355.00  
+##      steps             date               interval     
+##  Min.   :  0.00   Min.   :2012-10-01   Min.   :   0.0  
+##  1st Qu.:  0.00   1st Qu.:2012-10-16   1st Qu.: 588.8  
+##  Median :  0.00   Median :2012-10-31   Median :1177.5  
+##  Mean   : 37.38   Mean   :2012-10-31   Mean   :1177.5  
+##  3rd Qu.: 12.00   3rd Qu.:2012-11-15   3rd Qu.:1766.2  
+##  Max.   :806.00   Max.   :2012-11-30   Max.   :2355.0  
 ##  NA's   :2304
 ```
 
@@ -186,8 +186,8 @@ summary(activity_total_nona)
 ```
 
 ```
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-##     0.00  6778.00 10395.00  9354.23 12811.00 21194.00
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0    6778   10395    9354   12811   21194
 ```
 
 where the mean value, 9354, is marked by a green dot-dashed line and the median, 1.0395 &times; 10<sup>4</sup>, is marked by a red dashed line.
@@ -233,7 +233,7 @@ summary(activity_total_na)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##    41.0  8841.0 10765.0 10766.2 13294.0 21194.0       8
+##      41    8841   10765   10766   13294   21194       8
 ```
 we find that the minimum number of steps in a day is NA.
 
@@ -286,7 +286,7 @@ custom_timeseries <- function(df){
     theme_bw(base_size = 11) +
     theme(
         strip.background = element_blank()
-    )
+    ) %>% return
 }
 
 custom_timeseries(activity_mean)
@@ -385,7 +385,7 @@ summary(activity_total_fill1)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    41.0  9819.0 10766.2 10766.2 12811.0 21194.0
+##      41    9819   10766   10766   12811   21194
 ```
 we find that in this more peaked distribution, the median and mean values almost do not change when compared with the previous results, but the distribution of the quantiles is altered.
 
@@ -462,7 +462,7 @@ summary(activity_total_fill2)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    41.0  8615.0 10571.0 10490.2 12883.0 21194.0
+##      41    8615   10571   10490   12883   21194
 ```
 we find that in this case the distribution of the quartiles is less altered but the median and mean values are lower..
 
@@ -504,21 +504,28 @@ activity_mean2
 ```
 
 ```
-##         mean
-## 1 36.4243226
+## # A tibble: 576 x 3
+## # Groups:   interval [?]
+##    interval date      mean
+##    <chr>    <fct>    <dbl>
+##  1 0000     weekday 2.02  
+##  2 0000     weekend 0     
+##  3 0005     weekday 0.4   
+##  4 0005     weekend 0     
+##  5 0010     weekday 0.156 
+##  6 0010     weekend 0     
+##  7 0015     weekday 0.178 
+##  8 0015     weekend 0     
+##  9 0020     weekday 0.0889
+## 10 0020     weekend 0     
+## # ... with 566 more rows
 ```
 
 Using the _custom\_timeseries()_ function defined previously and adding a _facet\_grid()_ that runs over the values of the factor 'date', we can then easily plot the time series of the average number of steps per interval over the weekend and during the weekdays:
 
 
 ```r
-custom_timeseries(activity_mean2) + facet_grid(date~.)
-```
-
-```
-## Error: At least one layer must contain all faceting variables: `date`.
-## * Plot is missing `date`
-## * Layer 1 is missing `date`
+custom_timeseries(activity_mean2) %>% + facet_grid(activity_mean2$date~.)
 ```
 
 ![plot of chunk unnamed-chunk-28](figure/unnamed-chunk-28-1.png)
